@@ -14,20 +14,20 @@ export async function POST(req) {
 
     const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
+        stream: true,
         messages: [
             {role: "system", content: "You are a helpful assistant."}, 
-            {role: "user",   content: `tell me more about "${word}"`}
+            {role: "user",   content: `tell me briefly about "${word}"`}
         ],
     });
 
-    const res = {
-        text:completion.data.choices[0].message.content
-    }
-    return new Response(JSON.stringify(res), {
-        status: 200,
+    return new Response(completion.body, {
         headers: {
-          "content-type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "text/event-stream;charset=utf-8",
+          "Cache-Control": "no-cache, no-transform",
+          "X-Accel-Buffering": "no",
         },
-      });
+      })
 }
 
