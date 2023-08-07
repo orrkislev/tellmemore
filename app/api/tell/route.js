@@ -10,19 +10,24 @@ export async function POST(req) {
     const word = body.word
 
     console.log(`got ${word}`)
-    console.log(process.env.API_KEY)
-    console.log(configuration)
-    console.log(openai)
 
-    const completion = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [{"role": "system", "content": "You are a helpful assistant."}, 
-        {role: "user", content: `tell me more about "${word}"`}],
-    });
-
-    const res = {
-        text:completion.data.choices[0].message.content
+    const res = {text:'hello'}
+    try {
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [
+                {role: "system", content: "You are a helpful assistant."}, 
+                {role: "user",   content: `tell me more about "${word}"`}
+            ],
+        });
+        console.log(completion)
+        res = {
+            text:completion.data.choices[0].message.content
+        }
+    } catch (error) {
+        console.log(error)
     }
+    
     return new Response(JSON.stringify(res), {
         status: 200,
         headers: {
