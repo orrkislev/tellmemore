@@ -3,6 +3,13 @@ body{
   white-space:pre-wrap;
 }
 
+input{
+  border: none;
+  outline: none;
+  background: none;
+  width:100%;
+}
+
 .txt {
   font-size: .9em;
 }

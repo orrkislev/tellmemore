@@ -45,7 +45,6 @@ export default function TheThing(props) {
                 }
             })
         }
-
     }
 
     return (
