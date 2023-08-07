@@ -11,7 +11,7 @@ export async function POST(req) {
 
     console.log(`got ${word}`)
 
-    const res = {text:'hello'}
+    let res = {text:'hello'}
     try {
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
@@ -27,7 +27,7 @@ export async function POST(req) {
     } catch (error) {
         console.log(error)
     }
-    
+
     return new Response(JSON.stringify(res), {
         status: 200,
         headers: {
