@@ -10,6 +10,9 @@ export async function POST(req) {
     const word = body.word
 
     console.log(`got ${word}`)
+    console.log(process.env.API_KEY)
+    console.log(configuration)
+    console.log(openai)
 
     const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
