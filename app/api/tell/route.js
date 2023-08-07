@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from 'openai-edge'
 
 export async function POST(req) {
     const configuration = new Configuration({
@@ -11,23 +11,15 @@ export async function POST(req) {
 
     console.log(`got ${word}`)
 
-    let res = {text:'hello'}
-    try {
-        const completion = await openai.createChatCompletion({
-            model: "gpt-3.5-turbo",
-            messages: [
-                {role: "system", content: "You are a helpful assistant."}, 
-                {role: "user",   content: `tell me more about "${word}"`}
-            ],
-        });
-        console.log(completion)
-        res = {
-            text:completion.data.choices[0].message.content
-        }
-    } catch (error) {
-        console.log(error)
-    }
+    const completion = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [{"role": "system", "content": "You are a helpful assistant."}, 
+        {role: "user", content: `tell me more about "${word}"`}],
+    });
 
+    const res = {
+        text:completion.data.choices[0].message.content
+    }
     return new Response(JSON.stringify(res), {
         status: 200,
         headers: {
@@ -35,3 +27,4 @@ export async function POST(req) {
         },
       });
 }
+
